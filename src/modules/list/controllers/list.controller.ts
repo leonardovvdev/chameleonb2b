@@ -56,6 +56,77 @@ const precargarImagen = (url: string) => {
   imagenesPrecargadas.set(url, img);
 };
 
+/* ───────────────────── Precarga de la primera página ─────────────────────
+ * Se lanza desde la animación de entrada (/auth/callback), antes de que esta pantalla
+ * exista, así la tabla ya tiene datos cuando se monta. Como aún no se sabe cuántas filas
+ * caben, se piden las que CABRÍAN como máximo en esta ventana y luego se recorta.
+ * El backend ordena por apellido, nombre e id (orden único), así que las primeras N filas
+ * son siempre las mismas sin importar el tamaño de página.
+ */
+const PRECARGA_VIGENCIA_MS = 30_000;
+
+// Mismos valores que seccion_3.tsx. Con la tabla "pegada arriba" salen las filas máximas.
+const ALTO_FILA_MAX = 56;
+const ALTO_FIJO_MIN = 20 /* separación inferior */ + 20 * 2 /* padding */ + 44 /* header */ + 44; /* paginación */
+
+let precarga: { promesa: Promise<PaginaStaff>; creadaEn: number } | null = null;
+
+/** Se descarta cuando los datos pueden estar desactualizados (recarga o edición). */
+const descartarPrecarga = () => {
+  precarga = null;
+};
+
+const sonFiltrosIniciales = (f: StaffFilters) =>
+  (f.busqueda ?? "").trim() === "" && f.cargoId === null && f.rolId === null && f.estado === "";
+
+/** Pide la primera página de la lista y precarga las fotos. No espera: devuelve al terminar. */
+export const precargarPrimeraPaginaStaff = (): Promise<void> => {
+  const filas = Math.min(
+    50,
+    Math.max(3, Math.floor((window.innerHeight - ALTO_FIJO_MIN) / ALTO_FILA_MAX))
+  );
+
+  const promesa = listStaff(1, filas, FILTROS_STAFF_INICIALES).then(({ data, count }) => {
+    data.forEach((staff) => {
+      if (staff.img_url) precargarImagen(staff.img_url);
+    });
+    return { data, count } as PaginaStaff;
+  });
+
+  precarga = { promesa, creadaEn: Date.now() };
+  return promesa.then(
+    () => undefined,
+    () => undefined // si falla, la pantalla pedirá la lista normalmente
+  );
+};
+
+/**
+ * Entrega la página pedida recortándola de la precarga (aunque siga en curso).
+ * Devuelve null si no aplica (filtros, vencida, no alcanza o falló): se consulta al servidor.
+ */
+const tomarDePrecarga = async (
+  pagina: number,
+  filas: number,
+  filtros: StaffFilters
+): Promise<PaginaStaff | null> => {
+  if (!precarga || !sonFiltrosIniciales(filtros)) return null;
+  if (Date.now() - precarga.creadaEn > PRECARGA_VIGENCIA_MS) {
+    precarga = null;
+    return null;
+  }
+
+  try {
+    const base = await precarga.promesa;
+    const inicio = (pagina - 1) * filas;
+    const fin = pagina * filas;
+    // Si faltan filas y el servidor tiene más, esta precarga no alcanza.
+    if (fin > base.data.length && base.data.length < base.count) return null;
+    return { data: base.data.slice(inicio, fin), count: base.count };
+  } catch {
+    return null;
+  }
+};
+
 const useValorConRetardo = <T>(valor: T, retardoMs: number): T => {
   const [valorConRetardo, setValorConRetardo] = useState(valor);
 
@@ -152,7 +223,9 @@ export const useStaffController = (
       const enCurso = pendientes.current.get(clave);
       if (enCurso) return enCurso;
 
-      const promesa = listStaff(pagina, itemsPorPagina, filtrosConsulta)
+      const promesa = (async () =>
+        (await tomarDePrecarga(pagina, itemsPorPagina, filtrosConsulta)) ??
+        listStaff(pagina, itemsPorPagina, filtrosConsulta))()
         .then(({ data, count }) => {
           const resultado: PaginaStaff = { data, count };
 
@@ -233,6 +306,7 @@ export const useStaffController = (
    * tabla actual hasta que llega la respuesta.
    */
   const recargar = useCallback(() => {
+    descartarPrecarga();
     cache.current.clear();
     pendientes.current.clear();
     return cargarStaffs(true);
@@ -288,6 +362,7 @@ export const useStaffController = (
 
   // Actualiza el estado en la lista visible y en las páginas guardadas.
   const actualizarActivoLocal = (stffId: number, activo: boolean) => {
+    descartarPrecarga();
     const aplicar = (lista: StaffListItem[]) =>
       lista.map((s) => (s.stff_id === stffId ? { ...s, stff_active: activo } : s));
 
@@ -303,6 +378,7 @@ export const useStaffController = (
   /** Refleja una edición al instante en la fila visible y en las páginas guardadas. */
   const actualizarStaffLocal = useCallback(
     (stffId: number, cambios: Partial<StaffListItem>) => {
+      descartarPrecarga();
       const aplicar = (lista: StaffListItem[]) =>
         lista.map((s) => (s.stff_id === stffId ? { ...s, ...cambios } : s));
 

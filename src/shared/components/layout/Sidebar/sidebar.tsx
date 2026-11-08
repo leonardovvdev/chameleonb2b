@@ -10,7 +10,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import style from "./sidebar.module.css";
 import { supabase } from "../../../../lib/supabase";
 import { icon } from "../../../../core/icons";
-import { obtenerMisModulos } from "../../../../core/services";
+import { obtenerMisModulos, limpiarCache } from "../../../../core/services";
 
 // Clase compartida para los links de sub-menú
 const navClass = ({ isActive }: { isActive: boolean }) =>
@@ -121,6 +121,19 @@ const Sidebar = () => {
       }
     };
 
+const cerrarSesion = async () => {
+  try {
+    // "local": cierra solo esta sesión (no la de tus otros dispositivos)
+    await supabase.auth.signOut({ scope: "local" });
+  } catch (err) {
+    console.error("Error al cerrar sesión:", err);
+  }
+
+  limpiarCache(); // caché en memoria y la de sessionStorage (aw_cache:*)
+  localStorage.removeItem("aw_erp_jwt");
+  sessionStorage.clear();
+  navigate("/login", { replace: true });
+};
 useEffect(() => {
   const cargarPermisos = async () => {
     const { data: sessionData } = await supabase.auth.getSession();
@@ -387,6 +400,31 @@ useEffect(() => {
             </NavLink>
           </p>
         )}
+      </section>
+            {/* CERRAR SESIÓN (abajo del todo) */}
+      <section className={style.seccion3}>
+        <button
+          type="button"
+          className={style.botonSalir}
+          onClick={cerrarSesion}
+          title="Cerrar sesión"
+        >
+          <svg
+            className={style.iconSalir}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span className={style.label}>Cerrar sesión</span>
+        </button>
       </section>
     </div>
   );

@@ -59,7 +59,10 @@ const ModalLogueo = ({ onCrearCuenta, bloqueado = false }: ModalLogueoProps) => 
     setLoading(false);
 
     // 3. Si funcionó, navega; si no, muestra el error
-    if (resultado.ok) navigate(resultado.destino, { replace: true });
+    // Pasa primero por la animación de /auth/callback, que redirige al destino al terminar.
+    if (resultado.ok) {
+      navigate("/auth/callback", { replace: true, state: { destino: resultado.destino } });
+    }
     else setError(resultado.error);
   };
 

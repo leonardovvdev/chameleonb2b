@@ -74,10 +74,10 @@ export default function BarraSuperior({ onAbrirMenu }: BarraSuperiorProps) {
 
       {/* DERECHA: notificaciones + usuario */}
       <div className={style.usuario}>
-        <button type="button" className={style.botonCampana} aria-label="Notificaciones">
+        {/* <button type="button" className={style.botonCampana} aria-label="Notificaciones">
           <icon.iconBell className={style.iconoCampana} />
           <span className={style.puntoNotificacion} />
-        </button>
+        </button> */}
 
         <div className={style.avatar}>
           {customer?.cust_name_img_url ? (
@@ -96,7 +96,7 @@ export default function BarraSuperior({ onAbrirMenu }: BarraSuperiorProps) {
           <p className={style.rolUsuario}>Administrador</p>
         </div>
 
-        <icon.iconArrowDown className={style.iconoChevron} />
+        {/* <icon.iconArrowDown className={style.iconoChevron} /> */}
       </div>
     </header>
   );

@@ -1,8 +1,12 @@
 import { FunctionsHttpError } from "@supabase/supabase-js";
 import { supabase } from "../../../lib/supabase";
+import { invalidarCache } from "../../../core/services/cache";
 import type { Role, RoleInput, RolesResponse } from "../types/role.types";
 
 const ENDPOINT = "backend-chameleonb2b/customer-roles";
+
+/** Clave de la caché que usa core/services/catalog.service.ts */
+const CLAVE_CACHE = "catalog:roles";
 
 /**
  * Error que devuelve el backend: { error, code } + status HTTP.
@@ -43,6 +47,8 @@ async function request<T>(
     body,
   });
   if (error) throw await toApiError(error);
+  // Tras crear / editar / eliminar, la lista cacheada quedó vieja.
+  if (method !== "GET") invalidarCache(CLAVE_CACHE);
   return data as T;
 }
 

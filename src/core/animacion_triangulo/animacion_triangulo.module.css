@@ -1,0 +1,87 @@
+/* ==========================================================================
+   animacion_triangulo.module.css — Animación de entrada a pantalla completa.
+   Dura 5 s en total (si cambias los tiempos, ajusta DURACION_ANIMACION_MS en index.ts):
+     0 – 2.8 s   las líneas entran desde los bordes y dibujan el círculo
+     2.6 – 4.4 s aparece el gorrión dentro del círculo
+     4.4 – 5 s   el dibujo completo se mantiene
+   ========================================================================== */
+
+.pantalla {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: #f6f8fb;
+  overflow: hidden;
+}
+
+.dibujo {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.lineaIzq,
+.lineaDer {
+  fill: none;
+  stroke: #16253c;
+  stroke-width: 3; /* si lo cambias, ajusta GROSOR en el .tsx */
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1; /* oculto hasta que empieza su animación */
+}
+
+/* --escala la pone el componente (prop `escala`): 1 = tiempos normales */
+.lineaIzq,
+.lineaDer {
+  animation: trazar calc(2.8s * var(--escala, 1)) cubic-bezier(0.45, 0, 0.25, 1) both;
+}
+
+/* Gorrión: posición y tamaño los calcula el componente (ocupa el interior del círculo) */
+.gorrion {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  user-select: none;
+  opacity: 0; /* oculto hasta que empieza su animación */
+  animation: aparecer calc(1.8s * var(--escala, 1)) cubic-bezier(0.22, 0.8, 0.3, 1)
+    calc(2.6s * var(--escala, 1)) both;
+}
+
+@keyframes trazar {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Texto solo para lectores de pantalla */
+.soloLectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Con "reducir movimiento" el dibujo aparece completo y quieto */
+@media (prefers-reduced-motion: reduce) {
+  .lineaIzq,
+  .lineaDer {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .gorrion {
+    animation: none;
+    opacity: 1;
+  }
+}

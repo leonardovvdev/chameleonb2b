@@ -390,3 +390,53 @@
 .botonLogo:focus-visible .iconExpandir {
   opacity: 1;
 }
+/* --- Cerrar sesión (pie del sidebar) --- */
+.seccion3 {
+  padding: 10px;
+  border-top: 1px solid var(--sb-line);
+}
+
+.botonSalir {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sb-text);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.botonSalir:hover {
+  background-color: var(--sb-hover);
+  color: var(--sb-text-strong);
+}
+
+.botonSalir:focus-visible {
+  outline: 2px solid var(--sb-focus);
+  outline-offset: 1px;
+}
+
+.iconSalir {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Colapsado: solo el icono, centrado */
+.collapsed .seccion3 {
+  padding: 10px 6px;
+}
+
+.collapsed .botonSalir {
+  justify-content: center;
+  padding: 9px 0;
+}

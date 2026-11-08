@@ -1,46 +1,263 @@
+/* ==========================================================================
+   modal.module.css — Modal de crear / editar / eliminar (Cargo y Rol).
+   Paleta sobria alineada con la interfaz: azul marino #0B1A4C / #1F2E45.
+   ========================================================================== */
+
+/* ---------- Fondo y contenedor ---------- */
+
 .overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 
-    background-color: rgba(11, 26, 76, 0.45);
+  background-color: rgba(11, 26, 76, 0.45);
+  animation: aparecerFondo 0.18s ease-out;
 }
 
 .contenido {
-    width: 100%;
-    max-width: 460px;
-    max-height: 90vh;
-    overflow-y: auto;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
 
-    padding: 24px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(11, 26, 76, 0.25);
 
-    font-family: "Inter", sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  animation: aparecerModal 0.2s ease-out;
 }
 
 .titulo {
-    margin: 0 0 16px;
-    color: #0B1A4C;
-    font-size: 18px;
-    font-weight: 600;
+  margin: 0 0 16px;
+  color: #0b1a4c;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .cuerpo {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
+.mensaje {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.mensaje b {
+  color: #0b1a4c;
+}
+
+/* ---------- Campos ---------- */
+
+.label {
+  margin-top: 8px;
+  color: #1f2e45;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.label:first-child {
+  margin-top: 0;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #94a3b8;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: #94a3b8;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #1f2e45;
+  box-shadow: 0 0 0 3px rgba(31, 46, 69, 0.14);
+}
+
+.textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.textoError {
+  margin-top: 8px;
+  padding: 8px 12px;
+
+  color: #9b2c2c;
+  font-size: 13px;
+
+  background-color: #fbf1f1;
+  border: 1px solid #ecc9c9;
+  border-radius: 8px;
+}
+
+/* ---------- Botones ---------- */
+
 .acciones {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.boton,
+.botonSecundario,
+.botonPeligro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 96px;
+  padding: 10px 18px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.boton:hover:not(:disabled),
+.botonSecundario:hover:not(:disabled),
+.botonPeligro:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.boton:active:not(:disabled),
+.botonSecundario:active:not(:disabled),
+.botonPeligro:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.boton:focus-visible,
+.botonSecundario:focus-visible,
+.botonPeligro:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 46, 69, 0.25);
+}
+
+.boton:disabled,
+.botonSecundario:disabled,
+.botonPeligro:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Guardar → verde oscuro, apagado */
+.boton {
+  color: #ffffff;
+  background-color: #2f6f4f;
+}
+
+.boton:hover:not(:disabled) {
+  background-color: #265a40;
+  box-shadow: 0 4px 10px rgba(38, 90, 64, 0.3);
+}
+
+/* Cancelar → rojo apagado; al pasar el mouse se rellena */
+.botonSecundario {
+  color: #9b3b3b;
+  background-color: #ffffff;
+  border-color: #dcb4b4;
+}
+
+.botonSecundario:hover:not(:disabled) {
+  color: #ffffff;
+  background-color: #9b3b3b;
+  border-color: #9b3b3b;
+  box-shadow: 0 4px 10px rgba(155, 59, 59, 0.28);
+}
+
+/* Eliminar (confirmación) → rojo oscuro sólido */
+.botonPeligro {
+  color: #ffffff;
+  background-color: #9b3b3b;
+}
+
+.botonPeligro:hover:not(:disabled) {
+  background-color: #843030;
+  box-shadow: 0 4px 10px rgba(132, 48, 48, 0.3);
+}
+
+/* Spinner mientras guarda (los botones se deshabilitan en ese momento) */
+.boton:disabled::before,
+.botonPeligro:disabled::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+/* ---------- Animaciones ---------- */
+
+@keyframes aparecerFondo {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes aparecerModal {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .contenido,
+  .boton,
+  .botonSecundario,
+  .botonPeligro {
+    animation: none;
+    transition: none;
+  }
 }
