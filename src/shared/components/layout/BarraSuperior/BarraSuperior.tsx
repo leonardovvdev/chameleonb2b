@@ -32,9 +32,20 @@ export default function BarraSuperior({ onAbrirMenu }: BarraSuperiorProps) {
     };
   }, []);
 
+  // Si entró un personal se muestra él (nombre, foto y rol); si no, el dueño de la cuenta.
+  const staff = customer?.staff ?? null;
+
   const nombreCompleto = customer
-    ? `${customer.cust_name} ${customer.cust_lastname}`
+    ? staff
+      ? `${staff.stff_name} ${staff.stff_lastname}`
+      : `${customer.cust_name} ${customer.cust_lastname}`
     : "Cargando...";
+
+  const imagenUsuario = staff ? staff.img_url : (customer?.cust_name_img_url ?? null);
+
+  const rolUsuario = staff
+    ? (staff.role_name ?? staff.job_position_name ?? "Personal")
+    : "Administrador";
 
   return (
     <header className={style.barrasuperior}>
@@ -80,9 +91,9 @@ export default function BarraSuperior({ onAbrirMenu }: BarraSuperiorProps) {
         </button> */}
 
         <div className={style.avatar}>
-          {customer?.cust_name_img_url ? (
+          {imagenUsuario ? (
             <img
-              src={customer.cust_name_img_url}
+              src={imagenUsuario}
               alt={nombreCompleto}
               className={style.imagenUsuario}
             />
@@ -93,7 +104,7 @@ export default function BarraSuperior({ onAbrirMenu }: BarraSuperiorProps) {
 
         <div className={style.datosUsuario}>
           <p className={style.nombreUsuario}>{nombreCompleto}</p>
-          <p className={style.rolUsuario}>Administrador</p>
+          <p className={style.rolUsuario}>{rolUsuario}</p>
         </div>
 
         {/* <icon.iconArrowDown className={style.iconoChevron} /> */}

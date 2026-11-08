@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { callBackend } from "../../../../../../core/services/backend";
+import { obtenerCustomerActual } from "../../../../../../core/services/customer.service";
 import type { StaffAttendance } from "../../../../types/register.types";
 import style from "./modal_advancements.module.css";
 import { usePuedeEliminar } from "../../../../controllers/register.controller";
@@ -76,8 +77,13 @@ const updateAdelanto = (id: number, payload: AdelantoPayload): Promise<Adelanto>
 const deleteAdelanto = (id: number): Promise<{ id: number }> =>
   callBackend<{ id: number }>("attendance/advancements", { method: "DELETE", query: { id } });
 
-/** Quien usa el sistema es el titular de la cuenta (null = "Super admin"). */
-const getActor = async (): Promise<Actor> => ({ staffId: null, name: null });
+/** Quien usa el sistema: el personal que entró, o el titular de la cuenta (null = "Super admin"). */
+const getActor = async (): Promise<Actor> => {
+  const { staff } = await obtenerCustomerActual();
+  return staff
+    ? { staffId: staff.stff_id, name: `${staff.stff_name} ${staff.stff_lastname}`.trim() }
+    : { staffId: null, name: null };
+};
 /* ───────── Apoyo ───────── */
 
 /** "2026-10-26" → "26 Oct 2026" */
