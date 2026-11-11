@@ -338,18 +338,18 @@ useEffect(() => {
               <icon.iconGlobo className={style.iconSub} />
               Sitio Web
             </NavLink>
-            <NavLink to="/mobile" className={navClass}>
+            {/* <NavLink to="/mobile" className={navClass}>
               <icon.iconMovil className={style.iconSub} />
               Aplicación Móvil
-            </NavLink>
-            <NavLink to="/appearance" className={navClass}>
+            </NavLink> */}
+            {/* <NavLink to="/appearance" className={navClass}>
               <icon.iconColorPalette className={style.iconSub} />
               Diseño y Apariencia
-            </NavLink>
-            <NavLink to="/configuration" className={navClass}>
+            </NavLink> */}
+            {/* <NavLink to="/configuration" className={navClass}>
               <icon.iconConfiguration className={style.iconSub} />
               Configuración
-            </NavLink>
+            </NavLink> */}  
           </Collapsible>
         )}
 

@@ -24,6 +24,8 @@ import ExcelRoutes from "../../modules/excel/routes/excel.routes";
 import FotocheckRoutes from "../../modules/fotocheck/routes/fotocheck.routes";
 import ConfigurationRoutes from "../../modules/configuration/routes/configuration.routes";
 
+import WebRoutes from "../../modules/web/routes/web.routes";
+
 
 export default function AppRoutes() {
     return (
@@ -59,6 +61,8 @@ export default function AppRoutes() {
                             {ReportsRoutes}              
                             {ExcelRoutes}
                             {ConfigurationRoutes}
+                            {WebRoutes}
+                    
                     
                         </Route>
                     </Route>
@@ -75,9 +79,7 @@ export default function AppRoutes() {
                     />
 
 
-                    
-                    
-                    
+
                 </Routes>
             </AuthProvider>
         </BrowserRouter>
