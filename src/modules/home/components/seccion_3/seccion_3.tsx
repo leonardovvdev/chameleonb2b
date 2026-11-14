@@ -3,7 +3,7 @@ import style from "./seccion_3.module.css"
 const Seccion_3 = () => {
 
     const handleRedirect = () => {
-        window.open("https://ferreteriagorrioncito-one.vercel.app/", "_blank");
+        window.open("https://distribuidora-ferretera-gorrioncito.vercel.app/", "_blank");
     };
 
     return (
