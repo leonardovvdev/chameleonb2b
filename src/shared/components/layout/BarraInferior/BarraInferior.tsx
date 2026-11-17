@@ -1,5 +1,5 @@
 import style from "./BarraInferior.module.css";
-
+import img from "../../../../../public/chameleonb2b.png";
 const BarraInferior = () => {
   return (
     <footer className={style.footer}>
@@ -7,8 +7,8 @@ const BarraInferior = () => {
         {/* Columna 1: Logo + descripcion + redes */}
         <div className={style.columna}>
           <div className={style.logo}>
-            <span className={style.logoIcono}>S</span>
-            <span className={style.logoTexto}>SYSTEM AW</span>
+            <span className={style.logoIcono}><img src={img} alt="" /></span>
+            <span className={style.logoTexto}>CHAMELEON B2B</span>
           </div>
           <p className={style.descripcion}>
             Soluciones inteligentes que impulsan la productividad y el
@@ -84,7 +84,7 @@ const BarraInferior = () => {
           <h3 className={style.titulo}>CONTÁCTANOS</h3>
           <ul className={style.listaContacto}>
             <li>Perú</li>
-            <li>hola@systemaw.com</li>
+            <li>chameleonb2b@gmail.com</li>
             <li>+51 987 654 321</li>
             <li>Lun - Vie: 8:00 a.m. - 6:00 p.m.</li>
             <li>Sáb: 8:00 a.m. - 12:00 p.m.</li>

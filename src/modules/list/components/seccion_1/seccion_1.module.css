@@ -13,6 +13,10 @@
   color: #0f172a; /* el título y el párrafo lo heredan */
 }
 
+p{
+    font-size: 13px;
+}
+
 .boton {
   display: flex;
   align-items: center;

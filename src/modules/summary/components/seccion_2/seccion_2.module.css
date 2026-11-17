@@ -1,0 +1,210 @@
+.seccion {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 16px;
+  padding: 16px 24px 28px;
+  border: 1px solid #dcdde1;
+  border-radius: 6px;
+  background: #fffafa;
+  font-family: inherit;
+}
+
+/* ─── Título ────────────────────────────────────────────── */
+
+.titulo {
+  text-align: center;
+  color: #111111;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.titulo p {
+  margin: 0;
+}
+
+/* ─── Cuerpo: gráfico + leyenda ─────────────────────────── */
+
+.cuerpo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 16px;
+}
+
+.grafico {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 320px;
+  margin-bottom: 28px; /* espacio para las etiquetas de abajo */
+}
+
+/* ─── Eje Y ─────────────────────────────────────────────── */
+
+.ejeY {
+  position: relative;
+  flex-shrink: 0;
+  width: 56px;
+  border-right: 1.5px solid #111111;
+}
+
+.marca {
+  position: absolute;
+  right: 14px;
+  transform: translateY(50%);
+  color: #111111;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ─── Grupos de barras ──────────────────────────────────── */
+
+.area {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  padding-left: 8px;
+}
+
+.grupo {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.barras {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.barra {
+  position: relative;
+  width: min(40%, 28px);
+  min-height: 2px;
+  transform-origin: bottom;
+  transition: height 0.5s ease;
+  animation: crecer 0.5s ease;
+}
+
+.barraVerde {
+  background: #1bb10d;
+}
+
+.barraGris {
+  background: #d9d9d9;
+}
+
+.valor {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 4px;
+  color: #111111;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.periodo {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  color: #555555;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* ─── Leyenda ───────────────────────────────────────────── */
+
+.leyenda {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 24px 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cuadro {
+  flex-shrink: 0;
+  width: 44px;
+  height: 36px;
+}
+
+/* ─── Animación ─────────────────────────────────────────── */
+
+@keyframes crecer {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  .seccion {
+    padding: 14px 12px 24px;
+  }
+
+  .cuerpo {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .grafico {
+    width: 100%;
+    height: 260px;
+  }
+
+  .ejeY {
+    width: 44px;
+  }
+
+  .marca {
+    right: 8px;
+    font-size: 12px;
+  }
+
+  .barra {
+    width: min(40%, 12px);
+  }
+
+  .periodo {
+    font-size: 10px;
+  }
+
+  .leyenda {
+    margin: 0;
+  }
+
+  .cuadro {
+    width: 32px;
+    height: 24px;
+  }
+}

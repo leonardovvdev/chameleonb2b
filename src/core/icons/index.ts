@@ -52,6 +52,8 @@ import { iconClock } from "./clock";
 import { iconFotocheck } from "./fotocheck";
 import { iconGoogle } from "./google";
 import { iconUploadImage } from "./upload-image";
+import { iconSummary } from "./summary";
+import { iconCatalog } from "./catalog";
 
 export const icon = {
   iconHojaPaper,
@@ -108,4 +110,6 @@ export const icon = {
   iconFotocheck,
   iconGoogle,
   iconUploadImage,
+  iconSummary,
+  iconCatalog
 };

@@ -1,0 +1,120 @@
+.seccion {
+  padding: 24px;
+}
+
+.tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+/* resplandor suave alrededor de la tarjeta de visitas */
+.halo {
+  padding: 6px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eef0ff, #f6f7ff);
+}
+
+/* ─── Tarjeta ────────────────────────────────────────────── */
+.tarjeta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 200px;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.18);
+  font-family: inherit;
+  text-align: left;
+}
+
+.tarjetaBoton {
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tarjetaBoton:hover {
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.2);
+}
+
+.tarjetaBoton:active {
+  transform: scale(0.98);
+}
+
+.tarjetaBoton:focus-visible {
+  outline: 2px solid #0f2f9e;
+  outline-offset: 3px;
+}
+
+/* ─── Círculo ────────────────────────────────────────────── */
+.circulo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.circuloVerde {
+  background: linear-gradient(145deg, #4adf9f, #22b87a);
+  color: #ffffff;
+}
+
+.circuloGris {
+  background: #d9d9d9;
+}
+
+.iconoOjo {
+  width: 24px;
+  height: 24px;
+}
+
+/* ─── Texto ──────────────────────────────────────────────── */
+.datos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  animation: cambiar 0.25s ease;
+}
+
+.numero {
+  color: #000000;
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.etiqueta {
+  margin-top: 2px;
+  color: #5d6a88;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.etiquetaAzul {
+  color: #1a1a9c;
+  font-weight: 700;
+}
+
+@keyframes cambiar {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .datos {
+    animation: none;
+  }
+}

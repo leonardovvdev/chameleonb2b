@@ -33,7 +33,7 @@ import Parte3, { FERIADO_INICIAL, CLAVES_FERIADO, validarPaso3, type FeriadoStat
 import Parte4, { HONORARIOS_INICIAL, validarPaso4, type HonorariosState } from "./parte4";
 import Parte5 from "./parte5";
 
-const PASOS = ["Datos personales", "Horario", "Feriados", "Honorarios", "Resumen"];
+const PASOS = ["Datos personales", "Horario", "No laboral", "Honorarios", "Resumen"];
 const TOTAL_PASOS = PASOS.length;
 
 const SUBTITULOS = [

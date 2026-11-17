@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #460161;
+  
   color: #ffffff;
   border-radius: 6px;
   font-weight: 700;
@@ -92,13 +92,13 @@
   justify-content: center;
   border-radius: 50%;
   background: #f3f1f5;
-  color: #460161;
+  color: #181818;
   text-decoration: none;
   transition: background 0.2s ease;
 }
 
 .redIcono:hover {
-  background: #e6e1eb;
+  background: #cdecae;
 }
 
 /* Titulos de columnas */
@@ -133,7 +133,7 @@
 }
 
 .lista a:hover {
-  color: #460161;
+  color: #096101;
 }
 
 /* Lista de contacto (sin flecha) */
@@ -145,6 +145,7 @@
   flex-direction: column;
   gap: 10px;
   color: #6b6f76;
+  cursor:context-menu;
 }
 
 /* ─── DIVISOR ───────────────────────────────────────────── */
@@ -179,7 +180,7 @@
 
 .seguridad svg {
   flex-shrink: 0;
-  color: #460161;
+  color: #01611e;
 }
 
 .seguridad p {
@@ -197,7 +198,7 @@
 }
 
 .copyright a {
-  color: #460161;
+  color: #01611e;
   text-decoration: none;
 }
 
@@ -222,7 +223,7 @@
 
 .tarjeta {
   background: #f3f1f5;
-  color: #460161;
+  color: #01611e;
   font-size: 10px;
   font-weight: 700;
   padding: 4px 8px;

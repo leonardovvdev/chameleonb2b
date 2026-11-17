@@ -16,5 +16,6 @@ export const RUTAS_MENU: RutaMenu[] = [
   { ruta: "/registers", migas: ["Gestión Empresarial", "Asistencia", "Registro"], Icono: icon.iconAttendance },
   { ruta: "/reports", migas: ["Gestión Empresarial", "Asistencia", "Reportes"], Icono: icon.iconStatistics },
   { ruta: "/storage", migas: ["Gestión Empresarial", "Almacenamiento"], Icono: icon.iconFile },
+  { ruta: "/summary", migas: ["Gestión Digital", "sitio web", "Resumen"], Icono: icon.iconGlobo },
 
 ];

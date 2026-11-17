@@ -99,6 +99,7 @@ const Sidebar = () => {
 
   const [loading, setLoading] = useState(true);
   const [canPersonalDevelopment, setCanPersonalDevelopment] = useState(false);
+  
   const [canBusinessManagement, setCanBusinessManagement] = useState(false);
   const [canDigitalManagement, setCanDigitalManagement] = useState(false);
 
@@ -107,6 +108,9 @@ const Sidebar = () => {
 
   const [personalOpen, setPersonalOpen] = useState(false);
   const [asistenciaOpen, setAsistenciaOpen] = useState(false);
+
+  const [webOpen, setWebOpen] = useState(false);
+  
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -334,10 +338,26 @@ useEffect(() => {
             onToggle={toggleModulo(setDigitalManagementOpen)}
             collapsed={collapsed}
           >
-            <NavLink to="/web" className={navClass}>
-              <icon.iconGlobo className={style.iconSub} />
-              Sitio Web
-            </NavLink>
+
+            <Collapsible
+              nested
+              id="submenu-asistencia" /* antes repetía "submenu-personal" */
+              title="Sitio Web"
+              icon={<icon.iconGlobo className={style.iconSub} />}
+              open={webOpen}
+              onToggle={() => setWebOpen((v) => !v)}
+            >
+              <NavLink to="/summary" className={navClass}>
+                <icon.iconSummary className={style.iconSub} />
+                Resumen
+              </NavLink>
+
+              <NavLink to="/catalog" className={navClass}>
+                <icon.iconCatalog className={style.iconSub} />
+                Catalogo
+              </NavLink>
+            </Collapsible>
+            
             {/* <NavLink to="/mobile" className={navClass}>
               <icon.iconMovil className={style.iconSub} />
               Aplicación Móvil

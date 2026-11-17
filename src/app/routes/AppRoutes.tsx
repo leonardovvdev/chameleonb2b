@@ -24,7 +24,8 @@ import ExcelRoutes from "../../modules/excel/routes/excel.routes";
 import FotocheckRoutes from "../../modules/fotocheck/routes/fotocheck.routes";
 import ConfigurationRoutes from "../../modules/configuration/routes/configuration.routes";
 
-import WebRoutes from "../../modules/web/routes/web.routes";
+import CatalogRoutes from "../../modules/catalog/routes/catalog.routes";
+import SummaryRoutes from "../../modules/summary/routes/summary.routes";
 
 
 export default function AppRoutes() {
@@ -61,15 +62,13 @@ export default function AppRoutes() {
                             {ReportsRoutes}              
                             {ExcelRoutes}
                             {ConfigurationRoutes}
-                            {WebRoutes}
-                    
+                            {CatalogRoutes}
+                            {SummaryRoutes}
                     
                         </Route>
                     </Route>
 
              
-               
-
 
                     {/* ==================== RUTA POR DEFECTO ==================== */}
 
@@ -77,7 +76,6 @@ export default function AppRoutes() {
                         path="*"
                         element={<Navigate to="/" replace />}
                     />
-
 
 
                 </Routes>
